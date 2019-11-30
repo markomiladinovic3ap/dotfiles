@@ -5,6 +5,7 @@
     disabledPackages: [
       "metrics"
       "exception-reporting"
+      "linter"
     ]
     ignoredNames: [
       ".git"
@@ -21,15 +22,17 @@
       "one-light-ui"
       "one-light-syntax"
     ]
+    titleBar: "custom-inset"
   editor:
     fontSize: 13
     invisibles: {}
     showInvisibles: true
-    tabLength: 4
   minimap:
     plugins:
       "git-diff": true
       "git-diffDecorationsZIndex": 0
+  "php-debug":
+    showWelcome: false
   "spell-check":
     grammars: [
       "text.html.basic"
@@ -42,3 +45,12 @@
   whitespace:
     ensureSingleTrailingNewline: false
     removeTrailingWhitespace: false
+".basic.html.text":
+  editor:
+    tabLength: 2
+".console.python.text":
+  editor:
+    tabLength: 4
+".html.php.text":
+  editor:
+    tabLength: 4

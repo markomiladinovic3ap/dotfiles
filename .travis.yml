@@ -1,16 +1,10 @@
-language: ruby
 os: osx
-osx_image: xcode7.3
-rvm: system
+osx_image: xcode10
 
 cache:
   directories:
     - $HOME/Library/Caches/Homebrew
     - $HOME/.cache/pip
-
-before_install:
-  - brew update
-  - brew install ansible
 
 script:
   - ansible-playbook site.yml --syntax-check

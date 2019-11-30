@@ -9,3 +9,5 @@
     - ssh
     - macos
     - php
+    - apache
+    - tomcat

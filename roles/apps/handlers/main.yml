@@ -1,0 +1,12 @@
+---
+- name: restart memcached
+  command: brew services restart memcached
+
+- name: restart mysql
+  command: brew services restart mysql@5.7
+
+- name: restart rabbitmq
+  command: brew services restart rabbitmq
+
+- name: restart redis
+  command: brew services restart redis

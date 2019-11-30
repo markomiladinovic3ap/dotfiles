@@ -1,4 +1,4 @@
 ---
 - name: restart apache
-  command: apachectl restart
+  command: brew services restart httpd
   become: yes
