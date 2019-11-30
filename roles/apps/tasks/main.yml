@@ -12,7 +12,7 @@
   ignore_errors: yes
   with_items:
     # for maven
-    - java
+    - java11
 
 - name: install brews
   homebrew: name={{ item }} state=present
@@ -31,10 +31,6 @@
     - liquibase
     - mongodb
     - maven
-
-- name: install Memcached
-  homebrew: name=memcached state=present
-  notify: restart memcached
 
 - name: install MySQL
   homebrew: name=mysql@5.7 state=present
