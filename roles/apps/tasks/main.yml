@@ -4,6 +4,7 @@
   with_items:
     - homebrew/cask
     - homebrew/cask-fonts
+    - AdoptOpenJDK/openjdk
     - cloudfoundry/tap
 
 - name: install prerequisite casks
@@ -12,12 +13,12 @@
   ignore_errors: yes
   with_items:
     # for maven
-    - java11
+    - adoptopenjdk11
 
 - name: install brews
   homebrew: name={{ item }} state=present
   ignore_errors: yes
-  with_items:
+  loop:
     - git
     - python
     - mas
@@ -29,7 +30,6 @@
     - wget
     - cf-cli
     - liquibase
-    - mongodb
     - maven
 
 - name: install MySQL
