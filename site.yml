@@ -9,3 +9,14 @@
     - ssh
     - macos
     - php
+    - sdkman
+    sdkman_dir: /usr/local/sdkman
+    sdkman_auto_answer: true
+    sdkman_update: true
+    sdkman_uninstall_packages:
+    - { candidate: gradle, version: '3.5' }
+    - { candidate: maven, version: 3.5.0 }
+    sdkman_install_packages:
+    - { candidate: java, version: '11.0.5.hs-adpt' }
+    sdkman_defaults:
+      java: 11.0.3.hs-adpt
