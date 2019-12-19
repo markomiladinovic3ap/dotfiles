@@ -2,11 +2,10 @@
 - name: install taps
   homebrew_tap: tap={{ item }} state=present
   with_items:
-    - caskroom/cask
-    - argon/mas
+    - homebrew/cask
+    - homebrew/cask-fonts
+    - AdoptOpenJDK/openjdk
     - cloudfoundry/tap
-    # for older java versions
-    - caskroom/versions
 
 - name: install prerequisite casks
   homebrew_cask: name={{ item }} state=present
@@ -14,102 +13,48 @@
   ignore_errors: yes
   with_items:
     # for maven
-    - java
-    - java8
+    - adoptopenjdk11
 
 - name: install brews
   homebrew: name={{ item }} state=present
   ignore_errors: yes
-  with_items:
+  loop:
     - git
     - python
     - mas
-    - memcached
-    - mysql
+    - maven
     - node
-    - rabbitmq
+    - yarn
     - rbenv
-    - redis
+    - ruby
     - wget
     - cf-cli
     - liquibase
-    - mongodb
     - maven
+
+- name: install MySQL
+  homebrew: name=mysql@5.7 state=present
+  notify: restart mysql
 
 - name: get installed apps from app store
   command: mas list
   when: not lookup("env", "CI")
   register: mas_result
-  # always_run: yes - deprecated, use check_mode=no instead
   check_mode: no
   changed_when: false
 
 - name: install apps from app store
   command: mas install {{ item }}
   ignore_errors: yes
-  when: (not mas_result.skipped|default(false)) and (item|string not in mas_result.stdout)
-  with_items:
-    # commented out apps are not free and cannot be installed automatically
-    # you have to install them yourself.
-    - 506189836 # Harvest
-    #- 413965349 # Soulver
-    #- 587512244 # Kaleidoscope
-    - 603117688 # CCMenu
-    #- 775737590 # iA Writer
-    #- 411643860 # DaisyDisk
-    - 497799835 # Xcode
-    #- 924726344 # Deliveries
-    #- 975937182 # Fantastical 2
-    #- 407963104 # Pixelmator
-    #- 557168941 # Tweetbot
-    - 409183694 # Keynote
-    - 409201541 # Pages
-    - 409203825 # Numbers
+  when: not mas_result.skipped|default(false) and item|string not in mas_result.stdout
+  with_items: "{{ app_store_apps }}"
 
 - name: install casks
   homebrew_cask: name={{ item }} state=present
   when: not lookup("env", "CI")
   ignore_errors: yes
-  with_items:
-    - alfred
-    - atom
-    - charles
-    - dash
-    - docker
-    - google-chrome
-    - firefox
-    - java
-    - kaleidoscope
-    - libreoffice
-    - paparazzi
-    - paw
-    - sequel-pro
-    - sketch
-    - skype
-    - textmate
-    - sourcetree
-    - transmit
-    - vlc
-    - sts
-    - webstorm
-    - slack
-    - caffeine
-    - android-studio
-
-- name: install pip packages
-  pip: name={{ item }} state=present
-  with_items:
-    - ansible
-    - mysqlclient
-    - python-memcached
-    - virtualenv
-
-- name: install npm packages
-  npm: name={{ item }} global=yes state=present
-  with_items:
-    - bower
-
-- name: install gem packages
-  gem: name={{ item }} state=present
-  with_items:
-    - bundler
+  with_items: "{{ cask_apps }}"
+# - name: install npm packages
+#   npm: name={{ item }} global=yes state=present
+#   with_items:
+#     - bower

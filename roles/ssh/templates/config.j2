@@ -1,10 +1,18 @@
 # {{ ansible_managed }}
 
+Host *
+    UseKeychain yes
+    AddKeysToAgent yes
+
 {% for host in ssh_hosts %}
 
 Host {{ host.nickname | default(host.hostname) }}
     Hostname {{ host.hostname }}
     User {{ host.user | default(lookup('env', 'USER')) }}
     ForwardAgent {% if host.forward_agent | default(False) %}yes{% else %}no{% endif %}
+
+{% if host.key is defined %}
+    IdentityFile {{ host.key }}
+{% endif %}
 
 {% endfor %}

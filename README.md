@@ -11,3 +11,7 @@
 7. Run `ansible-playbook site.yml --diff --ask-become-pass`
 
 Hint: you might want to uncomment the section "- name: install apps from app store", some of those apps are not free and there are a couple of errors from the app store if it cannot install them, therefore best manually install them in the app store, when you really need them
+
+## Tips
+
+To quickly apply configuration changes run `ansible-playbook site.yml --tags=configuration --diff --ask-become-pass`.
