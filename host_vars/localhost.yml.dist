@@ -1,4 +1,5 @@
----
+---   
+# update first two variables with your data
 git_user_name: Max Muster
 git_user_email: max.muster@example.org
 ssh_hosts:
