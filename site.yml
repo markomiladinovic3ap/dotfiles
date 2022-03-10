@@ -12,4 +12,4 @@
       sdkman_auto_answer: true
       sdkman_update: true
       sdkman_install_packages:
-      - { candidate: java, version: '11.0.5.hs-adpt' }
+      - { candidate: java, version: '17.0.2-tem' }
